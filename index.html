@@ -5,8 +5,6 @@
 <title>Gift For You 💝</title>
 
 <style>
-
-/* Reset */
 *{
   margin:0;
   padding:0;
@@ -56,6 +54,7 @@ body{
   color:white;
   z-index:2;
   position:relative;
+  cursor:pointer; /* important */
 }
 
 .main-heart{
@@ -97,7 +96,6 @@ button:hover{
   background:#ff0f68;
   transform:scale(1.08);
 }
-
 </style>
 </head>
 
@@ -111,24 +109,22 @@ button:hover{
 <div class="heart h5">❤️</div>
 
 <!-- Main Card -->
-<div class="container">
+<div class="container" onclick="goNext()">
 
   <div class="main-heart">💝</div>
 
   <h1>Do You Want a Gift?</h1>
 
-  <p>I made this specially for you 💕</p>
+  <p>Tap anywhere to start 💕</p>
 
   <button onclick="goNext()">YES</button>
 
 </div>
 
 <script>
-
 function goNext(){
   window.location.href = "song.html";
 }
-
 </script>
 
 </body>
