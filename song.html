@@ -90,14 +90,16 @@ h1{
 <div class="container">
   <h1>Only For You ❤️</h1>
   <div class="lyrics" id="lyrics">💗 Tap anywhere to start…</div>
-  <div class="tap">(music will play)</div>
+  <div class="tap" id="tapText">(music will play)</div>
 </div>
 
-<audio id="song" src="assets/song.mp3"></audio>
+<!-- Audio -->
+<audio id="song" preload="auto" src="assets/song.mp3"></audio>
 
 <script>
 const song = document.getElementById("song");
 const lyricsBox = document.getElementById("lyrics");
+const tapText = document.getElementById("tapText");
 
 const timedLyrics = [
   { text:"Kya khub lagti ho 💖", time:0 },
@@ -110,19 +112,20 @@ let index = 0;
 let started = false;
 
 function startSong(){
-  if(started) return;   // prevent multiple taps
-  started = true;
+  if(!song.paused) return;
 
-  song.currentTime = 0;
   song.play().then(()=>{
+    started = true;
+    tapText.innerText = "";
     lyricsBox.innerText = timedLyrics[0].text;
   }).catch(()=>{
-    lyricsBox.innerText = "❌ Tap again to allow sound";
-    started = false;
+    lyricsBox.innerText = "🔊 Tap again to allow sound";
   });
 }
 
 song.addEventListener("timeupdate",()=>{
+  if(!started) return;
+
   if(index < timedLyrics.length &&
      song.currentTime >= timedLyrics[index].time){
     lyricsBox.innerText = timedLyrics[index].text;
