@@ -55,7 +55,7 @@ body{
 
 h1{
   font-size:30px;
-  margin-bottom:20px;
+  margin-bottom:18px;
 }
 
 .lyrics{
@@ -81,7 +81,7 @@ h1{
 
 <body onclick="startSong()">
 
-<!-- Hearts -->
+<!-- Floating hearts -->
 <div class="heart h1">❤️</div>
 <div class="heart h2">💖</div>
 <div class="heart h3">💕</div>
@@ -110,14 +110,21 @@ let index = 0;
 let started = false;
 
 function startSong(){
-  if(started) return;
+  if(started) return;   // prevent multiple taps
   started = true;
 
-  song.play();
+  song.currentTime = 0;
+  song.play().then(()=>{
+    lyricsBox.innerText = timedLyrics[0].text;
+  }).catch(()=>{
+    lyricsBox.innerText = "❌ Tap again to allow sound";
+    started = false;
+  });
 }
 
 song.addEventListener("timeupdate",()=>{
-  if(index < timedLyrics.length && song.currentTime >= timedLyrics[index].time){
+  if(index < timedLyrics.length &&
+     song.currentTime >= timedLyrics[index].time){
     lyricsBox.innerText = timedLyrics[index].text;
     lyricsBox.style.animation="none";
     lyricsBox.offsetHeight;
